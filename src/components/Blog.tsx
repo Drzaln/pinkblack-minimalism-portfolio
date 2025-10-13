@@ -1,9 +1,18 @@
+"use client"
+
 import { useMediumPosts } from "@/lib/hooks/useMediumPost";
 import { Post } from "@/lib/types/post.types";
 import React from "react";
 
 interface BlogProps {
-  posts: Post[];
+  posts?: Post[];
+}
+
+interface MediumPost {
+  title: string;
+  link: string;
+  pubDate: string;
+  categories: string[];
 }
 
 const cardClass =
@@ -20,11 +29,19 @@ function getTimeAgo(dateString: string): string {
   return `${months} months ago`;
 }
 
-export default function Blog() {
+export default function Blog({ posts = [] }: BlogProps) {
   const { posts: mediumPosts, loading, error } = useMediumPosts();
 
+  // Combine database posts with Medium posts
   const allPosts = [
-    ...mediumPosts.map(p => ({
+    ...(posts || []).map((p: Post) => ({
+      title: p.title,
+      href: p.href,
+      tags: p.tags || [],
+      date: new Date(p.publishedAt).toISOString(),
+      source: 'database' as const,
+    })),
+    ...mediumPosts.map((p: MediumPost) => ({
       title: p.title,
       href: p.link,
       tags: p.categories.slice(0, 3),
@@ -38,56 +55,64 @@ export default function Blog() {
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl md:text-2xl font-semibold">Blogs</h2>
         {loading && (
-          <span className="text-sm text-zinc-500">Loading Medium posts...</span>
+          <span className="text-sm text-zinc-500 animate-pulse">
+            Loading Medium posts...
+          </span>
         )}
       </div>
 
       {error && (
-        <div className="mb-4 p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-sm">
-          Failed to load Medium posts. Showing database posts only.
+        <div className="mb-4 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-600 dark:text-yellow-400 text-sm">
+          ⚠️ Failed to load Medium posts. Showing database posts only.
         </div>
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        {allPosts.map((post, idx) => (
-          <a
-            key={`${post.source}-${idx}`}
-            href={post.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${cardClass} block group`}
-          >
-            <div className="flex items-start justify-between gap-2">
-              <h3 className="font-semibold group-hover:text-pink-500 flex-1">
-                {post.title}
-              </h3>
-              {post.source === 'medium' && (
-                <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20 whitespace-nowrap">
-                  Medium
-                </span>
-              )}
-            </div>
-            <div className="mt-2 flex items-center gap-2 text-sm text-zinc-500">
-              <span>{getTimeAgo(post.date)}</span>
-              {post.tags.length > 0 && (
-                <>
-                  <span>•</span>
-                  <div className="flex flex-wrap gap-2">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-xs"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-          </a>
-        ))}
-      </div>
+      {allPosts.length === 0 && !loading ? (
+        <div className={`${cardClass} text-center py-12`}>
+          <p className="text-zinc-500">No blog posts available yet.</p>
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {allPosts.map((post, idx) => (
+            <a
+              key={`${post.source}-${idx}`}
+              href={post.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${cardClass} block group hover:border-pink-500/20 transition-colors`}
+            >
+              <div className="flex items-start justify-between gap-2 mb-2">
+                <h3 className="font-semibold group-hover:text-pink-500 flex-1 line-clamp-2">
+                  {post.title}
+                </h3>
+                {post.source === 'medium' && (
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20 whitespace-nowrap">
+                    Medium
+                  </span>
+                )}
+              </div>
+              <div className="flex items-center gap-2 text-sm text-zinc-500">
+                <span>{getTimeAgo(post.date)}</span>
+                {post.tags.length > 0 && (
+                  <>
+                    <span>•</span>
+                    <div className="flex flex-wrap gap-2">
+                      {post.tags.slice(0, 3).map((tag: string, tagIdx: number) => (
+                        <span
+                          key={`${tag}-${tagIdx}`}
+                          className="px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-xs"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

@@ -12,15 +12,12 @@ export async function GET() {
     const response = await fetch(`https://medium.com/feed/@${username}`);
 
     if (!response.ok) {
-        console.log("failedddd to fetch medium")
       throw new Error('Failed to fetch Medium feed');
     }
 
     const xmlText = await response.text();
     
     const posts = parseRSS(xmlText);
-
-    console.log("====",posts)
 
     return NextResponse.json({
       success: true,

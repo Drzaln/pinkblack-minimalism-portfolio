@@ -50,7 +50,7 @@ export default function PortfolioPage() {
       <Experiences experiences={data.experiences} />
       <Educations educations={data.educations} />
       <Projects projects={data.projects} />
-      <Blog posts={data.posts} />
+      <Blog />
       <Contact profile={data.profile} />
       <Footer profile={data.profile} />
     </main>

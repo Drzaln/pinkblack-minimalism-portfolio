@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
 
+interface UseMediumPostsReturn {
+  posts: MediumPost[];
+  loading: boolean;
+  error: string | null;
+}
+
 export function useMediumPosts(): UseMediumPostsReturn {
   const [posts, setPosts] = useState<MediumPost[]>([]);
   const [loading, setLoading] = useState(true);
