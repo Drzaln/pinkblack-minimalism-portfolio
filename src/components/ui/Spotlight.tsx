@@ -25,7 +25,7 @@ export default function Spotlight() {
   return (
     <div
       ref={ref}
-      className="pointer-events-none absolute inset-0 [mask-image:radial-gradient(400px_circle_at_var(--x)_var(--y),white,transparent)]"
+      className="pointer-events-none absolute inset-0 overflow-hidden [mask-image:radial-gradient(400px_circle_at_var(--x)_var(--y),white,transparent)]"
     >
       <div className="absolute -inset-24 bg-gradient-to-br from-pink-300/12 via-fuchsia-400/10 to-pink-500/12 blur-3xl" />
     </div>
