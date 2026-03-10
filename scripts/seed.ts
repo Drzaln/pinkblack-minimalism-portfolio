@@ -18,7 +18,7 @@ const PROFILE_DATA = {
   isRelocatable: true,
   links: {
     email: "mailto:hafizha.krmmz@gmail.com",
-    resume: "https://drive.google.com/file/d/1jPdcmDEy9wYCkmsfdUugNaSygp-97uWV/view?usp=sharing",
+    resume: "https://drive.google.com/drive/folders/1tywFeR5N-Fg8UYcrrrLr4UxrjhGZlL8U?usp=sharing",
     github: "https://github.com/hafizha19",
     linkedin: "https://www.linkedin.com/in/hafizhatul-kiromi-mz/",
   },
@@ -41,13 +41,16 @@ const PROFILE_DATA = {
 
 const EXPERIENCES_DATA = [
   {
-    period: "Jun 2025 – Present",
+    period: "Jun 2025 – March 2026",
     title: "AI Engineer (Agentic Systems)",
     org: "Wwwaste Pte. Ltd",
     bullets: [
-      "Built agentic LLM systems with FastAPI, OpenAI, and LangChain—implemented Pydantic I/O, time-aware prompting, intent routing, and guardrails with tracing and fallback safety.",
-      "Integrated Google Route Optimization API on GCP to compute multi-pickup sequences with batching, quotas, and resilient retries.",
-      "Developed n8n automations: Slack/Discord alerts with webhook validation and retry backoff, plus an article generator that converts structured inputs into STAR-style Markdown.",
+      "Architected autonomous agentic workflows using LangGraph and FastAPI—implemented state-aware prompting, Pydantic I/O validation, and intent routing to automate waste management logistics.",
+      "Developed a geospatial routing engine via Google Cloud Route Optimization and OSRM—leveraged KNN algorithms and resilient retry logic on GCP to optimize multi-pickup sequences and fuel efficiency.",
+      "Engineered a specialized OCR pipeline using Tesseract with custom ROI preprocessing to digitize physical logs into structured, queryable data for waste management reporting.",
+      "Spearheaded a 24/7 RAG-based customer support system powered by Qdrant Vector DB and Redis workers, enabling context-aware responses from internal service manuals.",
+      "Architected end-to-end ESG data pipelines using Prefect, DuckDB, and BigQuery—tracked carbon emissions and ensured LLM reliability through Phoenix Arize and LangSmith observability.",
+      "Built cross-platform n8n automation workflows, integrating OpenAI-generated content with real-time Slack and Discord notifications to enhance organizational transparency."
     ],
     order: 1,
     isActive: true,
