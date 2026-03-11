@@ -17,10 +17,10 @@
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.542.0",
     "mongoose": "^8.19.1",
-    "next": "15.5.2",
+    "next": "16.1.6",
     "nodemailer": "^7.0.9",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "rss-parser": "^3.13.0",
     "tailwind-merge": "^3.3.1"
   },
